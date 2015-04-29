@@ -112,6 +112,11 @@ func Fatal(args ...interface{}) {
 	std.Fatal(args...)
 }
 
+// Finef logs a message at level Fine on the standard logger.
+func Finef(format string, args ...interface{}) {
+	std.Finef(format, args...)
+}
+
 // Debugf logs a message at level Debug on the standard logger.
 func Debugf(format string, args ...interface{}) {
 	std.Debugf(format, args...)
