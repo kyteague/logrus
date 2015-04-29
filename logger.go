@@ -86,10 +86,12 @@ func (logger *Logger) Printf(format string, args ...interface{}) {
 	NewEntry(logger).Printf(format, args...)
 }
 
-func (logger *Logger) Warnf(format string, args ...interface{}) {
+func (logger *Logger) Warnf(format string, args ...interface{}) error {
 	if logger.Level >= WarnLevel {
-		NewEntry(logger).Warnf(format, args...)
+		return NewEntry(logger).Warnf(format, args...)
 	}
+
+	return nil
 }
 
 func (logger *Logger) Warningf(format string, args ...interface{}) {
@@ -140,10 +142,12 @@ func (logger *Logger) Print(args ...interface{}) {
 	NewEntry(logger).Info(args...)
 }
 
-func (logger *Logger) Warn(args ...interface{}) {
+func (logger *Logger) Warn(args ...interface{}) error {
 	if logger.Level >= WarnLevel {
-		NewEntry(logger).Warn(args...)
+		return NewEntry(logger).Warn(args...)
 	}
+
+	return nil
 }
 
 func (logger *Logger) Warning(args ...interface{}) {
@@ -215,5 +219,12 @@ func (logger *Logger) Fatalln(args ...interface{}) {
 func (logger *Logger) Panicln(args ...interface{}) {
 	if logger.Level >= PanicLevel {
 		NewEntry(logger).Panicln(args...)
+	}
+}
+
+// For backwards compatibility
+func (logger *Logger) Logc(level Level, closure func() string) {
+	if logger.Level >= level {
+		NewEntry(logger).Logc(level, closure)
 	}
 }

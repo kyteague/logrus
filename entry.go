@@ -105,6 +105,13 @@ func (entry *Entry) log(level Level, msg string) {
 	}
 }
 
+// For backwards compatibility
+func (entry *Entry) Logc(level Level, closure func() string) {
+	if entry.Logger.Level >= level {
+		entry.log(level, closure())
+	}
+}
+
 func (entry *Entry) Fine(args ...interface{}) {
 	if entry.Logger.Level >= FineLevel {
 		entry.log(FineLevel, fmt.Sprint(args...))
@@ -127,10 +134,14 @@ func (entry *Entry) Info(args ...interface{}) {
 	}
 }
 
-func (entry *Entry) Warn(args ...interface{}) {
+func (entry *Entry) Warn(args ...interface{}) error {
 	if entry.Logger.Level >= WarnLevel {
-		entry.log(WarnLevel, fmt.Sprint(args...))
+		msg := fmt.Sprint(args...)
+		entry.log(WarnLevel, msg)
+		return errors.New(msg)
 	}
+
+	return nil
 }
 
 func (entry *Entry) Warning(args ...interface{}) {
@@ -185,10 +196,14 @@ func (entry *Entry) Printf(format string, args ...interface{}) {
 	entry.Infof(format, args...)
 }
 
-func (entry *Entry) Warnf(format string, args ...interface{}) {
+func (entry *Entry) Warnf(format string, args ...interface{}) error {
 	if entry.Logger.Level >= WarnLevel {
-		entry.Warn(fmt.Sprintf(format, args...))
+		msg := fmt.Sprintf(format, args...)
+		entry.Warn(msg)
+		return errors.New(msg)
 	}
+
+	return nil
 }
 
 func (entry *Entry) Warningf(format string, args ...interface{}) {

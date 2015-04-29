@@ -88,8 +88,8 @@ func Info(args ...interface{}) {
 }
 
 // Warn logs a message at level Warn on the standard logger.
-func Warn(args ...interface{}) {
-	std.Warn(args...)
+func Warn(args ...interface{}) error {
+	return std.Warn(args...)
 }
 
 // Warning logs a message at level Warn on the standard logger.
@@ -133,8 +133,8 @@ func Infof(format string, args ...interface{}) {
 }
 
 // Warnf logs a message at level Warn on the standard logger.
-func Warnf(format string, args ...interface{}) {
-	std.Warnf(format, args...)
+func Warnf(format string, args ...interface{}) error {
+	return std.Warnf(format, args...)
 }
 
 // Warningf logs a message at level Warn on the standard logger.
@@ -195,4 +195,9 @@ func Panicln(args ...interface{}) {
 // Fatalln logs a message at level Fatal on the standard logger.
 func Fatalln(args ...interface{}) {
 	std.Fatalln(args...)
+}
+
+// For backwards compatibility
+func Logc(level Level, closure func() string) {
+	std.Logc(level, closure)
 }
