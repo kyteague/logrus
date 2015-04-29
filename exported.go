@@ -98,8 +98,8 @@ func Warning(args ...interface{}) {
 }
 
 // Error logs a message at level Error on the standard logger.
-func Error(args ...interface{}) {
-	std.Error(args...)
+func Error(args ...interface{}) error {
+	return std.Error(args...)
 }
 
 // Panic logs a message at level Panic on the standard logger.
@@ -138,8 +138,8 @@ func Warningf(format string, args ...interface{}) {
 }
 
 // Errorf logs a message at level Error on the standard logger.
-func Errorf(format string, args ...interface{}) {
-	std.Errorf(format, args...)
+func Errorf(format string, args ...interface{}) error {
+	return std.Errorf(format, args...)
 }
 
 // Panicf logs a message at level Panic on the standard logger.

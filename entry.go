@@ -2,6 +2,7 @@ package logrus
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -136,10 +137,14 @@ func (entry *Entry) Warning(args ...interface{}) {
 	entry.Warn(args...)
 }
 
-func (entry *Entry) Error(args ...interface{}) {
+func (entry *Entry) Error(args ...interface{}) error {
 	if entry.Logger.Level >= ErrorLevel {
-		entry.log(ErrorLevel, fmt.Sprint(args...))
+		msg := fmt.Sprint(args...)
+		entry.log(ErrorLevel, msg)
+		return errors.New(msg)
 	}
+
+	return nil
 }
 
 func (entry *Entry) Fatal(args ...interface{}) {
@@ -190,10 +195,14 @@ func (entry *Entry) Warningf(format string, args ...interface{}) {
 	entry.Warnf(format, args...)
 }
 
-func (entry *Entry) Errorf(format string, args ...interface{}) {
+func (entry *Entry) Errorf(format string, args ...interface{}) error {
 	if entry.Logger.Level >= ErrorLevel {
-		entry.Error(fmt.Sprintf(format, args...))
+		msg := fmt.Sprintf(format, args...)
+		entry.Error(msg)
+		return errors.New(msg)
 	}
+
+	return nil
 }
 
 func (entry *Entry) Fatalf(format string, args ...interface{}) {

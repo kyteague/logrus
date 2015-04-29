@@ -98,10 +98,12 @@ func (logger *Logger) Warningf(format string, args ...interface{}) {
 	}
 }
 
-func (logger *Logger) Errorf(format string, args ...interface{}) {
+func (logger *Logger) Errorf(format string, args ...interface{}) error {
 	if logger.Level >= ErrorLevel {
-		NewEntry(logger).Errorf(format, args...)
+		return NewEntry(logger).Errorf(format, args...)
 	}
+
+	return nil
 }
 
 func (logger *Logger) Fatalf(format string, args ...interface{}) {
@@ -150,10 +152,12 @@ func (logger *Logger) Warning(args ...interface{}) {
 	}
 }
 
-func (logger *Logger) Error(args ...interface{}) {
+func (logger *Logger) Error(args ...interface{}) error {
 	if logger.Level >= ErrorLevel {
-		NewEntry(logger).Error(args...)
+		return NewEntry(logger).Error(args...)
 	}
+
+	return nil
 }
 
 func (logger *Logger) Fatal(args ...interface{}) {
