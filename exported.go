@@ -67,6 +67,11 @@ func WithFields(fields Fields) *Entry {
 	return std.WithFields(fields)
 }
 
+// Fine logs a message at level Fine on the standard logger.
+func Fine(args ...interface{}) {
+	std.Fine(args...)
+}
+
 // Debug logs a message at level Debug on the standard logger.
 func Debug(args ...interface{}) {
 	std.Debug(args...)

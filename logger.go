@@ -64,6 +64,12 @@ func (logger *Logger) WithFields(fields Fields) *Entry {
 	return NewEntry(logger).WithFields(fields)
 }
 
+func (logger *Logger) Finef(format string, args ...interface{}) {
+	if logger.Level >= FineLevel {
+		NewEntry(logger).Finef(format, args...)
+	}
+}
+
 func (logger *Logger) Debugf(format string, args ...interface{}) {
 	if logger.Level >= DebugLevel {
 		NewEntry(logger).Debugf(format, args...)
@@ -107,6 +113,12 @@ func (logger *Logger) Fatalf(format string, args ...interface{}) {
 func (logger *Logger) Panicf(format string, args ...interface{}) {
 	if logger.Level >= PanicLevel {
 		NewEntry(logger).Panicf(format, args...)
+	}
+}
+
+func (logger *Logger) Fine(args ...interface{}) {
+	if logger.Level >= FineLevel {
+		NewEntry(logger).Fine(args...)
 	}
 }
 

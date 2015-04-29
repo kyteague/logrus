@@ -14,6 +14,8 @@ type Level uint8
 // Convert the Level to a string. E.g. PanicLevel becomes "panic".
 func (level Level) String() string {
 	switch level {
+	case FineLevel:
+		return "fine"
 	case DebugLevel:
 		return "debug"
 	case InfoLevel:
@@ -46,6 +48,8 @@ func ParseLevel(lvl string) (Level, error) {
 		return InfoLevel, nil
 	case "debug":
 		return DebugLevel, nil
+	case "fine":
+		return FineLevel, nil
 	}
 
 	var l Level
@@ -71,6 +75,8 @@ const (
 	InfoLevel
 	// DebugLevel level. Usually only enabled when debugging. Very verbose logging.
 	DebugLevel
+	// Even finer level of debug. Added for Nitro.
+	FineLevel
 )
 
 // Won't compile if StdLogger can't be realized by a log.Logger

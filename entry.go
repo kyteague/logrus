@@ -104,6 +104,12 @@ func (entry *Entry) log(level Level, msg string) {
 	}
 }
 
+func (entry *Entry) Fine(args ...interface{}) {
+	if entry.Logger.Level >= FineLevel {
+		entry.log(FineLevel, fmt.Sprint(args...))
+	}
+}
+
 func (entry *Entry) Debug(args ...interface{}) {
 	if entry.Logger.Level >= DebugLevel {
 		entry.log(DebugLevel, fmt.Sprint(args...))
@@ -151,6 +157,12 @@ func (entry *Entry) Panic(args ...interface{}) {
 }
 
 // Entry Printf family functions
+
+func (entry *Entry) Finef(format string, args ...interface{}) {
+	if entry.Logger.Level >= FineLevel {
+		entry.Fine(fmt.Sprintf(format, args...))
+	}
+}
 
 func (entry *Entry) Debugf(format string, args ...interface{}) {
 	if entry.Logger.Level >= DebugLevel {
